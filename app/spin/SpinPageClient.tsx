@@ -8,6 +8,7 @@ interface SpinPageClientProps {
   mac: string;
   ip: string;
   sig: string;
+  loginUrl?: string;
 }
 
 export default function SpinPageClient({
@@ -15,6 +16,7 @@ export default function SpinPageClient({
   mac,
   ip,
   sig,
+  loginUrl,
 }: SpinPageClientProps) {
   const handleSpin = async (): Promise<SpinResult> => {
     return spinWheelAction(mac, ip, sig);
@@ -80,7 +82,7 @@ export default function SpinPageClient({
 
       {/* Spin Wheel */}
       <div className="z-10 w-full max-w-md">
-        <SpinWheel prizes={prizes} onSpin={handleSpin} />
+        <SpinWheel prizes={prizes} onSpin={handleSpin} loginUrl={loginUrl} />
       </div>
 
       {/* Footer */}

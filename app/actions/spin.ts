@@ -41,11 +41,19 @@ function generateDeviceToken(): string {
 export async function verifySignature(mac: string, ip: string, sig: string): Promise<boolean> {
   if (process.env.DEV_MODE === 'true') return true;
   const secret = process.env.HOTSPOT_SECRET || '';
+  
+  // Normalize MAC and IP (trim and uppercase for consistent hashing)
+  const normalizedMac = mac.trim().toUpperCase();
+  const normalizedIp = ip.trim();
+  const normalizedSig = sig.trim().toLowerCase();
+
   const expected = crypto
     .createHash('md5')
-    .update(mac + ip + secret)
-    .digest('hex');
-  return expected === sig;
+    .update(normalizedMac + normalizedIp + secret)
+    .digest('hex')
+    .toLowerCase();
+    
+  return expected === normalizedSig;
 }
 
 // ── Weighted random selection ──────────────────────────────

@@ -14,9 +14,10 @@ interface Prize {
 interface SpinWheelProps {
   prizes: Prize[];
   onSpin: () => Promise<SpinResult>;
+  loginUrl?: string;
 }
 
-export default function SpinWheel({ prizes, onSpin }: SpinWheelProps) {
+export default function SpinWheel({ prizes, onSpin, loginUrl }: SpinWheelProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [spinning, setSpinning] = useState(false);
   const [result, setResult] = useState<SpinResult | null>(null);
@@ -406,12 +407,21 @@ export default function SpinWheel({ prizes, onSpin }: SpinWheelProps) {
               </>
             )}
 
-            <button
-              onClick={() => setShowModal(false)}
-              className="mt-4 px-6 py-2 bg-yellow-700 hover:bg-yellow-600 text-white rounded-lg transition-colors cursor-pointer"
-            >
-              ပိတ်မည်
-            </button>
+            {loginUrl ? (
+              <a
+                href={loginUrl}
+                className="mt-4 block w-full py-3 bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 text-white font-bold rounded-xl transition-all shadow-lg shadow-green-950/40 text-center cursor-pointer"
+              >
+                🌐 အင်တာနက် စတင်အသုံးပြုမည် (Connect Internet)
+              </a>
+            ) : (
+              <button
+                onClick={() => setShowModal(false)}
+                className="mt-4 px-6 py-2 bg-yellow-700 hover:bg-yellow-600 text-white rounded-lg transition-colors cursor-pointer"
+              >
+                ပိတ်မည်
+              </button>
+            )}
           </div>
         </div>
       )}

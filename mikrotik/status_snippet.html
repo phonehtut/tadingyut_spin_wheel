@@ -1,0 +1,56 @@
+<!--
+  Optional: MikroTik Hotspot status.html Button Snippet
+  
+  If the user's captive portal popup closes before redirect,
+  they can still click this button from http://hotspot.local/status.html
+  to open the Lucky Spin Wheel anytime!
+  
+  Place this snippet inside your hotspot/status.html:
+-->
+
+<!-- Include MD5 library if not already present -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.19.0/js/md5.min.js"></script>
+
+<div style="text-align: center; margin: 20px auto;">
+  <button 
+    id="spinButton" 
+    style="
+      background: linear-gradient(135deg, #FFD700, #FF6B35);
+      color: #000;
+      font-weight: bold;
+      font-size: 16px;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+    "
+    onclick="goToSpin()"
+  >
+    🏮 သီတင်းကျွတ် ကံစမ်းမဲ လှည့်မည် 🏮
+  </button>
+</div>
+
+<script>
+  function goToSpin() {
+    var rawMac = '$(mac)';
+    var rawIp  = '$(ip)';
+    
+    // Normalize
+    var mac = (rawMac || '').trim().toUpperCase();
+    var ip  = (rawIp  || '').trim();
+    
+    // CONFIGURATION (Same as alogin.html)
+    var SECRET = 'YOUR_SHARED_SECRET';
+    var APP_URL = 'https://your-app.vercel.app';
+    
+    var sig = md5(mac + ip + SECRET).toLowerCase();
+    
+    var url = APP_URL + '/spin'
+      + '?mac=' + encodeURIComponent(mac)
+      + '&ip='  + encodeURIComponent(ip)
+      + '&sig=' + encodeURIComponent(sig);
+      
+    window.open(url, '_blank');
+  }
+</script>

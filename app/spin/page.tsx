@@ -11,6 +11,7 @@ async function SpinContent({
   const mac = (params.mac as string) || '';
   const ip = (params.ip as string) || '';
   const sig = (params.sig as string) || '';
+  const loginUrl = (params.login_url as string) || '';
 
   // 1. Verify signature on server side
   const isValidSig = await verifySignature(mac, ip, sig);
@@ -65,6 +66,16 @@ async function SpinContent({
               ? 'ဆုကုဒ်ကို ကောင်တာတွင် ပြသပါ'
               : 'ပါဝင်ကံစမ်းပေးအပ်ခြင်းအတွက် ကျေးဇူးတင်ပါသည်'}
           </p>
+
+          {loginUrl && (
+            <a
+              href={loginUrl}
+              className="mt-4 block w-full py-3 bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 text-white font-bold rounded-xl transition-all shadow-lg text-center"
+            >
+              🌐 အင်တာနက် စတင်အသုံးပြုမည် (Connect Internet)
+            </a>
+          )}
+
           <div className="mt-4 flex justify-center gap-2 text-4xl">
             <span className="lantern-float">🏮</span>
             <span className="lantern-float" style={{ animationDelay: '0.5s' }}>✨</span>
@@ -89,6 +100,7 @@ async function SpinContent({
       mac={mac}
       ip={ip}
       sig={sig}
+      loginUrl={loginUrl}
     />
   );
 }
