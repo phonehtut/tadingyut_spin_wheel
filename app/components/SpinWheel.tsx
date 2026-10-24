@@ -410,25 +410,12 @@ export default function SpinWheel({ prizes, onSpin, loginUrl }: SpinWheelProps) 
             {/* Instruction: Screenshot and Back to connect Wi-Fi */}
             <div className="mt-4 p-3 bg-amber-500/15 border border-amber-500/30 rounded-xl">
               <p className="text-sm font-bold text-yellow-300">
-                👈 Back ပြန်ထွက်ပြီး Wi-Fi ချိတ်ပါ
+                👈 ဖုန်း၏ Back ခလုတ်ဖြင့် ပြန်ထွက်ပြီး Wi-Fi ချိတ်ပါ
               </p>
               <p className="text-xs text-yellow-200/70 mt-1">
-                ဆုမဲကို Screenshot ရိုက်ပြီးပါက Back နှိပ်၍ Ticket ကုဒ်ထည့်ပါ
+                ဆုမဲကို Screenshot ရိုက်ပြီးပါက ဖုန်း၏ Back ဖြင့် မူရင်းစာမျက်နှာသို့ ပြန်သွား၍ Ticket ကုဒ်ထည့်ပါ
               </p>
             </div>
-
-            <button
-              onClick={() => {
-                if (typeof window !== 'undefined' && window.history.length > 1) {
-                  window.history.back();
-                } else {
-                  setShowModal(false);
-                }
-              }}
-              className="mt-4 w-full py-3 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white font-bold rounded-xl transition-all shadow-lg text-center cursor-pointer"
-            >
-              ⬅️ မူရင်းစာမျက်နှာသို့ ပြန်သွားမည် (Back)
-            </button>
           </div>
         </div>
       )}
