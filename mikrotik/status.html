@@ -1,0 +1,287 @@
+<html>
+<head>
+$(if refresh-timeout)
+<meta http-equiv="refresh" content="$(refresh-timeout-secs)">
+$(endif)
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta http-equiv="pragma" content="no-cache"><meta http-equiv="expires" content="-1">
+<title>MikroTicket Status</title><link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<script src="md5.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.19.0/js/md5.min.js"></script>
+<script>
+$(if advert-pending == 'yes')
+    var popup = '';
+    function focusAdvert() {
+	if (window.focus) popup.focus();
+    }
+    function openAdvert() {
+	popup = open('$(link-advert)', 'hotspot_advert', '');
+	setTimeout("focusAdvert()", 1000);
+    }
+$(endif)
+    function openLogout() {
+	if (window.name != 'hotspot_status') return true;
+        open('$(link-logout)', 'hotspot_logout', 'toolbar=0,location=0,directories=0,status=0,menubars=0,resizable=1,width=280,height=250');
+	window.close();
+	return false;
+    }
+
+    function openLuckySpin() {
+        var rawMac = '$(mac)';
+        var rawIp  = '$(ip)';
+        
+        var mac = (rawMac || '').trim().toUpperCase();
+        var ip  = (rawIp  || '').trim();
+        
+        // Vercel .env ထဲက HOTSPOT_SECRET
+        var SECRET = 'yxCzKZatJ2sqXsF7JL9r';
+        var APP_URL = 'https://tadingyut-spin-wheel.vercel.app';
+        
+        var hashFn = typeof md5 === 'function' ? md5 : (typeof hexMD5 === 'function' ? hexMD5 : null);
+        var sig = hashFn ? hashFn(mac + ip + SECRET).toLowerCase() : '';
+        
+        var url = APP_URL + '/spin'
+          + '?mac=' + encodeURIComponent(mac)
+          + '&ip='  + encodeURIComponent(ip)
+          + '&sig=' + encodeURIComponent(sig);
+
+        var cleanHostPath = APP_URL.replace(/^https?:\/\//, '') + '/spin'
+          + '?mac=' + encodeURIComponent(mac)
+          + '&ip='  + encodeURIComponent(ip)
+          + '&sig=' + encodeURIComponent(sig);
+
+        var androidIntentUrl = 'intent://' + cleanHostPath + '#Intent;scheme=https;package=com.android.chrome;end';
+
+        if (/Android/i.test(navigator.userAgent)) {
+            window.location.href = androidIntentUrl;
+        } else {
+            window.open(url, '_blank');
+        }
+    }
+</script>
+<style>
+    .btn-main {
+        background: #3b82f6;
+        color: white;
+        border: none;
+        width: 100%;
+        padding: 14px;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+    }
+    .btn-main:hover {
+        background: #2563eb;
+    }
+    .status-card {
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        width: 100%;
+        max-width: 420px;
+        padding: 10px 10px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        position: relative;
+        animation: fadeIn 0.5s ease-out;
+    }
+    table {
+        background-color: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        margin-bottom: 10px;
+        border-collapse: separate;
+        border-spacing: 0;
+        overflow: hidden;
+        padding: 10px;
+    }
+    table td
+    table tr:last-child td {
+    border-bottom: none;
+  }
+</style>
+</head>
+<body $(if advert-pending == 'yes') onLoad="openAdvert()" $(endif)>
+    <div class="ie-fixMinHeight">
+        <div class="main">
+            <div class="wrap status-card ">
+                <button class="btn-main" style="width: fit-content; position: absolute; top: 0; right: 0; margin-top: 10px; margin-right: 10px" onclick="document.getElementById('mForm').submit();"><svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#ffffff"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z"/></svg></button>
+                $(if login-by == 'trial')
+                    <h1>✋, 🧑🏻‍💻!</h1>
+                $(elif login-by != 'mac')
+                    <h1>✋, $(username)!</h1>
+                $(endif)                
+
+                <form id="mForm" action="$(link-logout)" name="logout" onSubmit="return openLogout()">
+                    <table id="infoTable">
+                        <tr><td>IP Address</td><td>$(ip)</td></tr>
+                        <tr><td>⬇️ Download</td><td>$(bytes-out-nice)</td></tr>
+                        <tr><td>⬆️ Upload</td><td>$(bytes-in-nice)</td></tr>
+                    $(if session-time-left)
+                        <tr><td>⏱️ Time Connected</td><td>$(uptime)</td></tr>
+                        <tr><td>⏳ Time Left</td><td>$(session-time-left)</td></tr>
+                    $(else)
+                        <tr><td>⏱️ Time Connected</td><td>$(uptime)</td></tr>
+                    $(endif)
+                    $(if blocked == 'yes')
+                        <tr><td>Status</td><td>
+                    <a href="$(link-advert)" target="hotspot_advert">Advertisement required</a></td>
+                        </tr>
+                    $(elif refresh-timeout)
+                        <tr><td>Status refresh</td><td>$(refresh-timeout)</td></tr>
+                    $(endif)
+                    </table>
+                    <table id="infoData"></table>
+
+                    <!-- 🏮 Thadingyut Lucky Spin Wheel Button -->
+                    <button 
+                        type="button" 
+                        style="
+                            background: linear-gradient(135deg, #FFD700 0%, #FF6B35 100%);
+                            color: #1a0a00;
+                            border: 2px solid rgba(255, 255, 255, 0.5);
+                            width: 100%;
+                            padding: 14px;
+                            border-radius: 12px;
+                            font-size: 16px;
+                            font-weight: 700;
+                            cursor: pointer;
+                            margin: 12px 0 6px 0;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            gap: 8px;
+                            box-shadow: 0 4px 18px rgba(255, 107, 53, 0.4);
+                        "
+                        onclick="openLuckySpin()"
+                    >
+                        <span>🏮</span> သီတင်းကျွတ် ကံစမ်းမဲ လှည့်မည် <span>✨</span>
+                    </button>
+
+                    $(if login-by-mac != 'yes')
+                    <button type="button" class="btn-main" onclick="window.location.href='https://www.google.com';">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    </button>
+                    $(endif)
+                </form>
+            </div>
+        </div>
+    </div>
+   <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const routerId = "6a547ffbe6ed28dd3b9df4cf";
+            const apiKey = "sk_7f9d2b1e6c3a8g5h0j4m7n2p9q6r3s";
+            const serverUrl = "https://prod.app.mikroticket.com/api/hotspot/ticket-info";
+            const ticketUser = "$(username)";
+            const headerApiKey= "KeyApi";
+
+            const apiUrl = `${serverUrl}?router=${routerId}&ticket=${ticketUser}`;
+
+            fetch(apiUrl, {
+                method: 'GET',
+                headers: {
+                    [headerApiKey]: apiKey,
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (!response.ok) throw new Error("Error en la API");
+                return response.json();
+            })
+            .then(res => {
+                if(res.success && res.data) {
+                    const data = res.data;
+                    const table = document.getElementById("infoData") || document.querySelector("table tbody") || document.querySelector("table");
+
+                    const addRow = (label, value) => {
+                        const tr = document.createElement("tr");
+                        tr.innerHTML = `<td>${label}</td><td>${value}</td>`;
+                        table.appendChild(tr);
+                    };
+                    addRow("🏷️ Internet plan", data.planName);
+                    const parseMkTime = (timeStr) => {
+                        if (!timeStr || timeStr === 'Sin vencimiento' || timeStr === 'Ilimitado') return 0;
+                        let ms = 0;
+                        let d = timeStr.match(/(\d+)d/);
+                        let t = timeStr.match(/(\d+):(\d+):(\d+)/);
+                        if (d) ms += parseInt(d[1]) * 86400000;
+                        if (t) {
+                            ms += parseInt(t[1]) * 3600000;
+                            ms += parseInt(t[2]) * 60000;
+                            ms += parseInt(t[3]) * 1000;
+                        }
+                        return ms;
+                    };
+
+                    if(data.activatedAt) {
+                        let activationMs = new Date(data.activatedAt).getTime();
+                        let msValidity = parseMkTime(data.validity);
+                        let now = new Date().getTime();
+
+                        let msTimeLimit = parseMkTime(data.timeLimit);
+
+                        if (data.timeLimit && data.timeLimit !== 'Ilimitado') {
+                            addRow("⏱️ Duration time", data.timeLimit);
+                        }
+
+                        if (msTimeLimit > 0) {
+                            if(data.validity === 'Sin vencimiento' || msValidity === 0) {
+                                if (msTimeLimit > 0) {
+                                    let exactExpiration = new Date(activationMs + msTimeLimit);
+                                    addRow("⏳ Valid until", exactExpiration.toISOString().replace('T', ' ').substring(0, 19));
+                                }
+                            }
+                             else {
+                                let exactExpiration = new Date(activationMs + msValidity);
+                                addRow("⏳ Valid until", exactExpiration.toISOString().replace('T', ' ').substring(0, 19));
+                            }
+                        }
+                    }
+                
+                    if(data.dataLimitMb && data.dataLimitMb !== 'Ilimitado') {
+                        addRow("🛢️ Total Data", data.dataLimitMb + " MB");
+
+                        // Verificamos que la API nos haya devuelto el sobrante base
+                        if(data.remainingBytesFromApi !== undefined && data.remainingBytesFromApi !== null) {
+                            
+                            let baseRemainingBytes = parseInt(data.remainingBytesFromApi);
+                            
+                            // Consumo EN VIVO de la sesión actual
+                            let sessionBytesIn = parseInt("$(bytes-in)") || 0;
+                            let sessionBytesOut = parseInt("$(bytes-out)") || 0;
+
+                            // Restamos el consumo de esta sesión al sobrante histórico
+                            let liveRemainingBytes = baseRemainingBytes - (sessionBytesIn + sessionBytesOut);
+                            
+                            if (liveRemainingBytes < 0) liveRemainingBytes = 0;
+
+                            // Formateo dinámico a MB o GB
+                            let formattedRemaining = "0 MB";
+                            if (liveRemainingBytes > 0) {
+                                let sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+                                let i = Math.floor(Math.log(liveRemainingBytes) / Math.log(1024));
+                                formattedRemaining = (liveRemainingBytes / Math.pow(1024, i)).toFixed(2) + ' ' + sizes[i];
+                            }
+
+                            // Aplicamos color rojo si queda poco (opcional, para dar mejor UX)
+                            if (liveRemainingBytes > 0 && liveRemainingBytes < (parseInt(data.dataLimitMb) * 1024 * 1024 * 0.1)) {
+                                addRow("📉 Remaining Data", `<span style='color:#e74c3c;'>${formattedRemaining}</span>`);
+                            } else {
+                                addRow("📉 Remaining Data", formattedRemaining);
+                            }
+                        }
+                    }
+                }
+            })
+            .catch(error => console.error("Error obteniendo ticket:", error));
+        });
+    </script>
+</body>
+</html>

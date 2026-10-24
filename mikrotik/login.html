@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="expires" content="-1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Internet hotspot - Log in</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body style="background: linear-gradient(rgba(255, 255, 255, 1.0), rgba(255, 255, 255, 1.0)),url('img/d67fa2d5-299b-4de7-b988-c5064bdc9a9e_f6de64c9-156c-4ce4-a4fb-d927b09eefd5.png') !important;background-size: cover !important; background-position: center !important;">
+    $(if chap-id)
+    <form name="sendin" action="$(link-login-only)" method="post" style="display:none">
+        <input type="hidden" name="username" />
+        <input type="hidden" name="password" />
+        <input type="hidden" name="dst" value="$(link-status)" />
+        <input type="hidden" name="popup" value="false" />
+    </form>
+
+    <script src="/md5.js"></script>
+    <script>
+        function doLogin() {
+            document.sendin.username.value = document.login.username.value;
+            document.sendin.password.value = hexMD5('$(chap-id)' + document.login.password.value + '$(chap-challenge)');
+            document.sendin.submit();
+            return false;
+        }
+    </script>
+    $(endif)
+    <div class="ie-fixMinHeight">
+        <div class="main">
+            <div class="wrap animated fadeIn">
+            
+        <style>
+            .form-container { text-align: center; background-color:rgba(255, 255, 255, 1.0); border-radius:10px; padding:10px; margin:10px;  box-sizing: border-box;}
+            .tabs { display: flex; justify-content: center; margin-bottom: 20px; list-style: none; padding: 0; }
+            .tab { flex: 1; text-align: center; padding: 10px; cursor: pointer; border-bottom: 1px solid rgba(7, 7, 10, 1.0); }
+            .tab.active { border-bottom: 3px solid rgba(7, 7, 10, 1.0); }
+            .tab a { text-decoration: none; color: rgba(10, 0, 0, 1.0); font-weight: bold; font-size: 20px; }
+            .hidden { display: none; }
+            .icoPin { height: 24px; position: absolute; top: 0; left: 0; margin-top: 10px; margin-left: 10px; fill: rgba(10, 0, 0, 1.0); }
+            .button-submit {
+                background: rgba(7, 7, 10, 1.0) !important;
+                color: rgba(255, 255, 255, 1.0) !important;
+                border: 0 !important;
+                cursor: pointer !important;
+                text-align: center !important;
+                width: 100% !important;
+                height: 44px !important;
+                border-radius: 10px !important;
+            }
+             .info {
+                color: rgba(10, 0, 0, 1.0);
+                text-align: center;
+                margin-bottom: 15px
+            }
+            .input-text {
+                width: 100% !important;
+                border: 1px solid rgba(10, 0, 0, 1.0) !important;
+                height: 44px !important;
+                padding: 3px 20px 3px 40px !important;
+                margin-bottom: 10px !important;
+                border-radius: 10px !important;
+                background-color: rgba(255, 255, 255, 1.0) !important;
+                color: rgba(10, 0, 0, 1.0);
+            }
+            input::placeholder {
+                color: rgba(10, 0, 0, 1.0);
+            }
+            .ico {
+                height: 16px;
+                position: absolute;
+                top: 0;
+                left: 0;
+                margin-top: 13px;
+                margin-left: 14px;
+                fill: rgba(10, 0, 0, 1.0) !important; 
+            }
+        </style>
+        
+        <div class="form-container">
+            <ul class="tabs">
+                <li class="tab active" data-tab="pin"><a href="#login">🔑</a></li>
+                <li class="tab" data-tab="user"><a href="#signup">👤</a></li>
+            </ul>
+        
+            <form name="login" action="$(link-login-only)" method="post" $(if chap-id) onSubmit="return doLogin()" $(endif)>
+                <input type="hidden" name="dst" value="$(link-status)" />
+                <input type="hidden" name="popup" value="false" />
+        
+                <p class="info $(if error)alert$(endif)">
+                    $(if error == "")ကုဒ်ထည့်ပါ$(endif)
+                    $(if error)$(error)$(endif)
+                </p>
+        
+                <label>
+                    <svg id="userForm" class="ico hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path  d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" id="pinForm" class="icoPin" height="24px" viewBox="0 -960 960 960" width="24px" ><path d="M120-160v-112q0-34 17.5-62.5T184-378q62-31 126-46.5T440-440q20 0 40 1.5t40 4.5q-4 58 21 109.5t73 84.5v80H120ZM760-40l-60-60v-186q-44-13-72-49.5T600-420q0-58 41-99t99-41q58 0 99 41t41 99q0 45-25.5 80T790-290l50 50-60 60 60 60-80 80ZM440-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm300 80q17 0 28.5-11.5T780-440q0-17-11.5-28.5T740-480q-17 0-28.5 11.5T700-440q0 17 11.5 28.5T740-400Z"/></svg>
+                    <input name="username" class="input-text" type="text" value="$(username)" placeholder="" />
+                </label>
+        
+                <label id="userInput" class="hidden">
+                    <svg class="ico"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M512 176.001C512 273.203 433.202 352 336 352c-11.22 0-22.19-1.062-32.827-3.069l-24.012 27.014A23.999 23.999 0 0 1 261.223 384H224v40c0 13.255-10.745 24-24 24h-40v40c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24v-78.059c0-6.365 2.529-12.47 7.029-16.971l161.802-161.802C163.108 213.814 160 195.271 160 176 160 78.798 238.797.001 335.999 0 433.488-.001 512 78.511 512 176.001zM336 128c0 26.51 21.49 48 48 48s48-21.49 48-48-21.49-48-48-48-48 21.49-48 48z"/></svg>
+                    <input name="password" class="input-text" type="password" placeholder="" />
+                </label>
+        
+                <label id="pinInput"></label>
+                <input type="submit" value="နှိပ်ပါ" class="button-submit"/>
+            </form>
+        
+            <script>
+                const tabs = document.querySelectorAll('.tab');
+                tabs.forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        tabs.forEach(t => t.classList.remove('active'));
+                        tabs.forEach(t => document.querySelector(`#${t.dataset.tab}Form`).classList.add('hidden'));
+                        tabs.forEach(t => document.querySelector(`#${t.dataset.tab}Input`).classList.add('hidden'));
+                        
+                        tab.classList.add('active');
+                        document.querySelector(`#${tab.dataset.tab}Form`).classList.remove('hidden');
+                        document.querySelector(`#${tab.dataset.tab}Input`).classList.remove('hidden');
+                    });
+                });
+            </script>
+        </div>
+        
+$(if trial == 'yes')
+     <div style="
+        background-color:rgba(255, 255, 255, 0.8);
+        border-radius:10px;
+        padding:10px;
+        margin:10px;
+        text-align: center;
+        box-sizing: border-box;">
+        <p style="color:rgba(7, 7, 10, 1.0)">Free internet trial</p>
+        <a href="$(link-login-only)?dst=$(link-orig-esc)&amp;username=T-$(mac-esc)"
+        style="
+           display:inline-block;
+           height: 44px;
+           text-align: center;
+           padding:12px;
+           margin-top:8px;
+           border-radius:10px;
+           width: 100%;
+           background-color:rgba(7, 7, 10, 1.0);
+           color:rgba(255, 255, 255, 1.0);
+           text-decoration:none;"
+        >Click here</a>
+     </div>
+$(endif)
+<div style="
+    background-color:rgba(255, 255, 255, 0.8);
+    border-radius:10px;
+    padding:10px;
+    margin:10px;
+    box-sizing: border-box;">
+    <p style="text-align: center;"><span style="color: rgba(7, 7, 10, 1.0);"><b>1Day Code များ</b></span><span style="color: rgba(7, 7, 10, 1.0);"> <b>&#32;Download Speed တိုးပေးထားပါတယ် Video Download</b> ဆွဲခြင်း <b>TikTok ကြည့်ခြင်း </b>များ စိတ်ကြိုက် ပြုလုပ်နိုင်ပါသည်</span></p>
+</div>
+            <style>
+                .custom-table {
+                    position:relative; 
+                    max-width:100%; 
+                    overflow:hidden;
+                    padding:10px;
+                    margin:10px;
+                    background-color: rgba(255, 255, 255, 0.8);
+                    border-radius: 10px;                 
+                    box-sizing: border-box;
+                }
+                .custom-row {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding: 10px;
+                    color: rgba(7, 7, 10, 1.0);
+                }
+                .custom-row:not(:last-child) {
+                    border-bottom: 1px solid rgba(7, 7, 10, 1.0);
+                }
+                .left-content {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                }
+                .emoji {
+                    font-size: 24px;
+                    min-width: 24px;
+                }
+                .text-content {
+                    display: flex;
+                    flex-direction: column;
+                }
+                .title {
+                    font-weight: bold;
+                }
+                .subtitle {
+                    font-size: 14px;
+                    opacity: 0.8;
+                }
+                .value {
+                    font-weight: bold;
+                }
+            </style>
+            <div class="custom-table">
+                <div class="custom-row">
+                    <div class="left-content">
+                        <div class="emoji"></div>
+                        <div class="text-content">
+                            <div class="title">2GB</div>
+                            <div class="subtitle">အချိန် အကန့်သတ်မရှိ</div>
+                        </div>
+                    </div>
+                    <div class="value">၃၀၀၀ ကျပ်</div>
+                </div>
+                <div class="custom-row">
+                    <div class="left-content">
+                        <div class="emoji"></div>
+                        <div class="text-content">
+                            <div class="title">1Day</div>
+                            <div class="subtitle">Good Speed</div>
+                        </div>
+                    </div>
+                    <div class="value">၅၀၀၀ ကျပ်</div>
+                </div>
+            </div>
+        </div>
+       </div>
+    </div>
+</body>
+</html>

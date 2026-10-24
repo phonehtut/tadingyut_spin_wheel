@@ -2,121 +2,12 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Logging in...</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- MD5 library for signature generation -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.19.0/js/md5.min.js"></script>
-  
-  <style>
-    body {
-      background: #1a0a00;
-      color: #FFD700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      text-align: center;
-      padding: 20px;
-      box-sizing: border-box;
-    }
-    .card {
-      background: rgba(30, 15, 10, 0.9);
-      border: 2px solid #b8860b;
-      border-radius: 20px;
-      padding: 25px 20px;
-      max-width: 360px;
-      width: 100%;
-      box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
-    }
-    .spinner {
-      border: 4px solid #333;
-      border-top: 4px solid #FFD700;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
-      margin: 0 auto 16px;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .btn {
-      display: block;
-      margin: 15px auto 0;
-      padding: 14px 20px;
-      background: linear-gradient(135deg, #FFD700, #FF6B35);
-      color: #000;
-      font-weight: bold;
-      border-radius: 25px;
-      text-decoration: none;
-      font-size: 16px;
-      box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
-    }
-  </style>
-</head>
-<body>
-  <div class="card">
-    <div class="spinner"></div>
-    <div style="font-size: 32px; margin-bottom: 8px;">🏮✨🏮</div>
-    <h3 style="margin: 0 0 8px; color: #FFD700;">အင်တာနက် ချိတ်ဆက်ပြီးပါပြီ</h3>
-    <p style="font-size: 13px; color: #f4d06f; margin-bottom: 15px;">
-      ကံစမ်းဘီး စာမျက်နှာသို့ သွားရောက်ရန် အောက်ပါခလုတ်ကို နှိပ်ပါ
-    </p>
-
-    <a id="spinBtn" class="btn" href="#">
-      🏮 ကံစမ်းဘီး လှည့်မည် 🏮
-    </a>
-  </div>
-  
+  <title>Redirecting to Status...</title>
+  <meta http-equiv="refresh" content="0; url=$(link-status)">
   <script>
-    // ─── MikroTik Template Variables ───────────────────────────
-    var rawMac = '$(mac)';
-    var rawIp  = '$(ip)';
-    
-    // Normalize
-    var mac = (rawMac || '').trim().toUpperCase();
-    var ip  = (rawIp  || '').trim();
-    
-    // ─── CONFIGURATION ─────────────────────────────────────────
-    var SECRET = 'YOUR_SHARED_SECRET';
-    var APP_URL = 'https://your-app.vercel.app';
-    
-    // ─── Generate MD5 Signature ────────────────────────────────
-    var sig = md5(mac + ip + SECRET).toLowerCase();
-    
-    // ─── Direct Web URL ────────────────────────────────────────
-    var webUrl = APP_URL + '/spin'
-      + '?mac=' + encodeURIComponent(mac)
-      + '&ip='  + encodeURIComponent(ip)
-      + '&sig=' + encodeURIComponent(sig);
-
-    // ─── Android Intent (Escapes CNA into real Chrome) ──────────
-    var isAndroid = /Android/i.test(navigator.userAgent);
-    var cleanHostPath = APP_URL.replace(/^https?:\/\//, '') + '/spin'
-      + '?mac=' + encodeURIComponent(mac)
-      + '&ip='  + encodeURIComponent(ip)
-      + '&sig=' + encodeURIComponent(sig);
-
-    var androidIntentUrl = 'intent://' + cleanHostPath + '#Intent;scheme=https;package=com.android.chrome;end';
-
-    var targetUrl = isAndroid ? androidIntentUrl : webUrl;
-
-    // Attach to button
-    var btn = document.getElementById('spinBtn');
-    if (btn) {
-      btn.href = targetUrl;
-    }
-
-    // Auto redirect
-    setTimeout(function() {
-      if (isAndroid) {
-        // Try launching external Chrome browser
-        window.location.href = androidIntentUrl;
-      } else {
-        window.location.href = webUrl;
-      }
-    }, 1200);
+    window.location.replace('$(link-status)');
   </script>
+</head>
+<body style="background: #0f172a;">
 </body>
 </html>
