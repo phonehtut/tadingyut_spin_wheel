@@ -1,26 +1,44 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-gold: #FFD700;
+  --color-gold-dark: #B8860B;
+  --color-festival-red: #DC143C;
+  --color-festival-orange: #FF6B35;
+  --color-festival-bg: #1a0a00;
+  --color-festival-card: #2d1810;
+  --color-festival-border: #8B4513;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Festival background with floating lanterns */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.6; }
+  50% { transform: translateY(-20px) rotate(5deg); opacity: 1; }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.6); }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes spin-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.festival-bg {
+  background: radial-gradient(ellipse at top, #2d1810 0%, #1a0a00 50%, #0d0500 100%);
+  min-height: 100vh;
+}
+
+.lantern-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.glow-card {
+  animation: glow 2s ease-in-out infinite;
+}
+
+.spin-button-pulse {
+  animation: spin-pulse 1.5s ease-in-out infinite;
 }
