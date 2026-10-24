@@ -8,7 +8,7 @@
     <title>Internet hotspot - Log in</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body style="background: linear-gradient(rgba(255, 255, 255, 1.0), rgba(255, 255, 255, 1.0)),url('img/d67fa2d5-299b-4de7-b988-c5064bdc9a9e_f6de64c9-156c-4ce4-a4fb-d927b09eefd5.png') !important;background-size: cover !important; background-position: center !important;">
+<body style="background: linear-gradient(rgba(0, 22, 43, 1.0), rgba(0, 22, 43, 1.0)) !important;">
     $(if chap-id)
     <form name="sendin" action="$(link-login-only)" method="post" style="display:none">
         <input type="hidden" name="username" />
@@ -25,7 +25,10 @@
             document.sendin.submit();
             return false;
         }
+    </script>
+    $(endif)
 
+    <script>
         // Inline lightweight MD5
         !function(n){"use strict";function d(n,t){var r=(65535&n)+(65535&t);return(n>>16)+(t>>16)+(r>>16)<<16|65535&r}function f(n,t,r,e,o,u){return d((u=d(d(t,n),d(e,u)))<<o|u>>>32-o,r)}function l(n,t,r,e,o,u,c){return f(t&r|~t&e,n,t,o,u,c)}function g(n,t,r,e,o,u,c){return f(t&e|r&~e,n,t,o,u,c)}function v(n,t,r,e,o,u,c){return f(t^r^e,n,t,o,u,c)}function m(n,t,r,e,o,u,c){return f(r^(t|~e),n,t,o,u,c)}function c(n,t){var r,e,o,u;n[t>>5]|=128<<t%32,n[14+(t+64>>>9<<4)]=t;for(var c=1732584193,f=-271733879,i=-1732584194,a=271733878,h=0;h<n.length;h+=16)c=l(r=c,e=f,o=i,u=a,n[h],7,-680876936),a=l(a,c,f,i,n[h+1],12,-389564586),i=l(i,a,c,f,n[h+2],17,606105819),f=l(f,i,a,c,n[h+3],22,-1044525330),c=l(c,f,i,a,n[h+4],7,-176418897),a=l(a,c,f,i,n[h+5],12,1200080426),i=l(i,a,c,f,n[h+6],17,-1473231341),f=l(f,i,a,c,n[h+7],22,-45705983),c=l(c,f,i,a,n[h+8],7,1770035416),a=l(a,c,f,i,n[h+9],12,-1958414417),i=l(i,a,c,f,n[h+10],17,-42063),f=l(f,i,a,c,n[h+11],22,-1990404162),c=l(c,f,i,a,n[h+12],7,1804603682),a=l(a,c,f,i,n[h+13],12,-40341101),i=l(i,a,c,f,n[h+14],17,-1502002290),c=g(c,f=l(f,i,a,c,n[h+15],22,1236535329),i,a,n[h+1],5,-165796510),a=g(a,c,f,i,n[h+6],9,-1069501632),i=g(i,a,c,f,n[h+11],14,643717713),f=g(f,i,a,c,n[h],20,-373897302),c=g(c,f,i,a,n[h+5],5,-701558691),a=g(a,c,f,i,n[h+10],9,38016083),i=g(i,a,c,f,n[h+15],14,-660478335),f=g(f,i,a,c,n[h+4],20,-405537848),c=g(c,f,i,a,n[h+9],5,568446438),a=g(a,c,f,i,n[h+14],9,-1019803690),i=g(i,a,c,f,n[h+3],14,-187363961),f=g(f,i,a,c,n[h+8],20,1163531501),c=g(c,f,i,a,n[h+13],5,-1444681467),a=g(a,c,f,i,n[h+2],9,-51403784),i=g(i,a,c,f,n[h+7],14,1735328473),c=v(c,f=g(f,i,a,c,n[h+12],20,-1926607734),i,a,n[h+5],4,-378558),a=v(a,c,f,i,n[h+8],11,-2022574463),i=v(i,a,c,f,n[h+11],16,1839030562),f=v(f,i,a,c,n[h+14],23,-35309556),c=v(c,f,i,a,n[h+1],4,-1530992060),a=v(a,c,f,i,n[h+4],11,1272893353),i=v(i,a,c,f,n[h+7],16,-155497632),f=v(f,i,a,c,n[h+10],23,-1094730640),c=v(c,f,i,a,n[h+13],4,681279174),a=v(a,c,f,i,n[h],11,-358537222),i=v(i,a,c,f,n[h+3],16,-722521979),f=v(f,i,a,c,n[h+6],23,76029189),c=v(c,f,i,a,n[h+9],4,-640364487),a=v(a,c,f,i,n[h+12],11,-421815835),i=v(i,a,c,f,n[h+15],16,530742520),c=m(c,f=v(f,i,a,c,n[h+2],23,-995338651),i,a,n[h],6,-198630844),a=m(a,c,f,i,n[h+7],10,1126891415),i=m(i,a,c,f,n[h+14],15,-1416354905),f=m(f,i,a,c,n[h+5],21,-57434055),c=m(c,f,i,a,n[h+12],6,1700485571),a=m(a,c,f,i,n[h+3],10,-1894986606),i=m(i,a,c,f,n[h+10],15,-1051523),f=m(f,i,a,c,n[h+1],21,-2054922799),c=m(c,f,i,a,n[h+8],6,1873313359),a=m(a,c,f,i,n[h+15],10,-30611744),i=m(i,a,c,f,n[h+6],15,-1560198380),f=m(f,i,a,c,n[h+13],21,1309151649),c=m(c,f,i,a,n[h+4],6,-145523070),a=m(a,c,f,i,n[h+11],10,-1120210379),i=m(i,a,c,f,n[h+2],15,718787259),f=m(f,i,a,c,n[h+9],21,-343485551),c=d(c,r),f=d(f,e),i=d(i,o),a=d(a,u);return[c,f,i,a]}function i(n){for(var t="",r=32*n.length,e=0;e<r;e+=8)t+=String.fromCharCode(n[e>>5]>>>e%32&255);return t}function a(n){var t=[];for(t[(n.length>>2)-1]=void 0,e=0;e<t.length;e+=1)t[e]=0;for(var r=8*n.length,e=0;e<r;e+=8)t[e>>5]|=(255&n.charCodeAt(e/8))<<e%32;return t}function e(n){for(var t,r="0123456789abcdef",e="",o=0;o<n.length;o+=1)t=n.charCodeAt(o),e+=r.charAt(t>>>4&15)+r.charAt(15&t);return e}function r(n){return unescape(encodeURIComponent(n))}function o(n){return i(c(a(n=r(n)),8*n.length))}function u(n,t){return function(n,t){var r,e=a(n),o=[],u=[];for(o[15]=u[15]=void 0,16<e.length&&(e=c(e,8*n.length)),r=0;r<16;r+=1)o[r]=909522486^e[r],u[r]=1549556828^e[r];return t=c(o.concat(a(t)),512+8*t.length),i(c(u.concat(t),640))}(r(n),r(t))}function t(n,t,r){return t?r?u(t,n):e(u(t,n)):r?o(n):e(o(n))}"function"==typeof define&&define.amd?define(function(){return t}):"object"==typeof module&&module.exports?module.exports=t:n.calcMD5=t}(this);
 
@@ -47,256 +50,96 @@
               + '&ip='  + encodeURIComponent(ip)
               + '&sig=' + encodeURIComponent(sig);
               
-            // Navigate directly so Back button returns right here to the ticket page!
+            // Navigate directly so Back button returns right here!
             window.location.href = spinUrl;
         }
     </script>
-    $(endif)
+
     <div class="ie-fixMinHeight">
         <div class="main">
             <div class="wrap animated fadeIn">
-            
-        <style>
-            /* 🏮 Thadingyut Lucky Spin Festival Banner */
-            .spin-banner {
-                background: linear-gradient(135deg, #2d1810 0%, #1a0a00 100%);
-                border: 2px solid #FFD700;
-                border-radius: 14px;
-                padding: 16px 12px;
-                margin: 10px;
-                text-align: center;
-                box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
-                position: relative;
-                overflow: hidden;
-            }
-            .spin-banner-btn {
-                background: linear-gradient(135deg, #FFD700 0%, #FF6B35 100%);
-                color: #1a0a00 !important;
-                font-weight: 800;
-                font-size: 16px;
-                padding: 14px 20px;
-                border-radius: 25px;
-                display: inline-block;
-                text-decoration: none;
-                margin-top: 10px;
-                width: 90%;
-                border: 2px solid #FFF;
-                cursor: pointer;
-                box-shadow: 0 4px 15px rgba(255, 107, 53, 0.5);
-                animation: pulse-spin 1.8s infinite;
-            }
-            @keyframes pulse-spin {
-                0%, 100% { transform: scale(1); }
-                50% { transform: scale(1.03); }
-            }
+                <style>
+                    /* 🏮 Thadingyut Lucky Spin Festival Banner */
+                    .spin-banner {
+                        background: linear-gradient(135deg, #2d1810 0%, #1a0a00 100%);
+                        border: 2px solid #FFD700;
+                        border-radius: 14px;
+                        padding: 16px 12px;
+                        margin: 10px;
+                        text-align: center;
+                        box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+                        position: relative;
+                        overflow: hidden;
+                    }
+                    .spin-banner-btn {
+                        background: linear-gradient(135deg, #FFD700 0%, #FF6B35 100%);
+                        color: #1a0a00 !important;
+                        font-weight: 800;
+                        font-size: 16px;
+                        padding: 14px 20px;
+                        border-radius: 25px;
+                        display: inline-block;
+                        text-decoration: none;
+                        margin-top: 10px;
+                        width: 90%;
+                        border: 2px solid #FFF;
+                        cursor: pointer;
+                        box-shadow: 0 4px 15px rgba(255, 107, 53, 0.5);
+                        animation: pulse-spin 1.8s infinite;
+                    }
+                    @keyframes pulse-spin {
+                        0%, 100% { transform: scale(1); }
+                        50% { transform: scale(1.03); }
+                    }
+                </style>
 
-            .form-container { text-align: center; background-color:rgba(255, 255, 255, 1.0); border-radius:10px; padding:10px; margin:10px;  box-sizing: border-box;}
-            .tabs { display: flex; justify-content: center; margin-bottom: 20px; list-style: none; padding: 0; }
-            .tab { flex: 1; text-align: center; padding: 10px; cursor: pointer; border-bottom: 1px solid rgba(7, 7, 10, 1.0); }
-            .tab.active { border-bottom: 3px solid rgba(7, 7, 10, 1.0); }
-            .tab a { text-decoration: none; color: rgba(10, 0, 0, 1.0); font-weight: bold; font-size: 20px; }
-            .hidden { display: none; }
-            .icoPin { height: 24px; position: absolute; top: 0; left: 0; margin-top: 10px; margin-left: 10px; fill: rgba(10, 0, 0, 1.0); }
-            .button-submit {
-                background: rgba(7, 7, 10, 1.0) !important;
-                color: rgba(255, 255, 255, 1.0) !important;
-                border: 0 !important;
-                cursor: pointer !important;
-                text-align: center !important;
-                width: 100% !important;
-                height: 44px !important;
-                border-radius: 10px !important;
-            }
-             .info {
-                color: rgba(10, 0, 0, 1.0);
-                text-align: center;
-                margin-bottom: 15px
-            }
-            .input-text {
-                width: 100% !important;
-                border: 1px solid rgba(10, 0, 0, 1.0) !important;
-                height: 44px !important;
-                padding: 3px 20px 3px 40px !important;
-                margin-bottom: 10px !important;
-                border-radius: 10px !important;
-                background-color: rgba(255, 255, 255, 1.0) !important;
-                color: rgba(10, 0, 0, 1.0);
-            }
-            input::placeholder {
-                color: rgba(10, 0, 0, 1.0);
-            }
-            .ico {
-                height: 16px;
-                position: absolute;
-                top: 0;
-                left: 0;
-                margin-top: 13px;
-                margin-left: 14px;
-                fill: rgba(10, 0, 0, 1.0) !important; 
-            }
-        </style>
-        
-        <!-- 🏮 သီတင်းကျွတ် ကံစမ်းမဲ Banner (ကံစမ်းမဲ အရင်လှည့်ပါ) 🏮 -->
-        <div class="spin-banner">
-            <div style="font-size: 28px; margin-bottom: 4px;">🏮✨🏮</div>
-            <div style="color: #FFD700; font-size: 19px; font-weight: 800; letter-spacing: 0.5px;">
-                ကံစမ်းမဲ အရင်လှည့်ပါ
-            </div>
-            <div style="color: #f4d06f; font-size: 12px; margin-top: 5px; line-height: 1.4;">
-                ဆုမဲပေါက်ပါက Screenshot ရိုက်ထားပြီး Back ပြန်ထွက်ကာ Ticket ကုဒ်ထည့်၍ Wi-Fi ချိတ်ပါ
-            </div>
-            <button type="button" class="spin-banner-btn" onclick="openLuckySpin()">
-                🏮 ကံစမ်းမဲ လှည့်မည် 🏮
-            </button>
-        </div>
+                <!-- 🏮 သီတင်းကျွတ် ကံစမ်းမဲ Banner (ကံစမ်းမဲ အရင်လှည့်ပါ) 🏮 -->
+                <div class="spin-banner">
+                    <div style="font-size: 28px; margin-bottom: 4px;">🏮✨🏮</div>
+                    <div style="color: #FFD700; font-size: 19px; font-weight: 800; letter-spacing: 0.5px;">
+                        ကံစမ်းမဲ အရင်လှည့်ပါ
+                    </div>
+                    <div style="color: #f4d06f; font-size: 12px; margin-top: 5px; line-height: 1.4;">
+                        ဆုမဲပေါက်ပါက Screenshot ရိုက်ထားပြီး Back ပြန်ထွက်ကာ Wi-Fi ချိတ်ပါ
+                    </div>
+                    <button type="button" class="spin-banner-btn" onclick="openLuckySpin()">
+                        🏮 ကံစမ်းမဲ လှည့်မည် 🏮
+                    </button>
+                </div>
 
-        <div class="form-container">
-            <ul class="tabs">
-                <li class="tab active" data-tab="pin"><a href="#login">🔑</a></li>
-                <li class="tab" data-tab="user"><a href="#signup">👤</a></li>
-            </ul>
-        
-            <form name="login" action="$(link-login-only)" method="post" $(if chap-id) onSubmit="return doLogin()" $(endif)>
-                <input type="hidden" name="dst" value="$(link-orig)" />
-                <input type="hidden" name="popup" value="true" />
-        
-                <p class="info $(if error)alert$(endif)">
-                    $(if error == "")ကုဒ်ထည့်ပါ$(endif)
-                    $(if error)$(error)$(endif)
-                </p>
-        
-                <label>
-                    <svg id="userForm" class="ico hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path  d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"/></svg>
-                    <svg xmlns="http://www.w3.org/2000/svg" id="pinForm" class="icoPin" height="24px" viewBox="0 -960 960 960" width="24px" ><path d="M120-160v-112q0-34 17.5-62.5T184-378q62-31 126-46.5T440-440q20 0 40 1.5t40 4.5q-4 58 21 109.5t73 84.5v80H120ZM760-40l-60-60v-186q-44-13-72-49.5T600-420q0-58 41-99t99-41q58 0 99 41t41 99q0 45-25.5 80T790-290l50 50-60 60 60 60-80 80ZM440-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47Zm300 80q17 0 28.5-11.5T780-440q0-17-11.5-28.5T740-480q-17 0-28.5 11.5T700-440q0 17 11.5 28.5T740-400Z"/></svg>
-                    <input name="username" class="input-text" type="text" value="$(username)" placeholder="" />
-                </label>
-        
-                <label id="userInput" class="hidden">
-                    <svg class="ico"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M512 176.001C512 273.203 433.202 352 336 352c-11.22 0-22.19-1.062-32.827-3.069l-24.012 27.014A23.999 23.999 0 0 1 261.223 384H224v40c0 13.255-10.745 24-24 24h-40v40c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24v-78.059c0-6.365 2.529-12.47 7.029-16.971l161.802-161.802C163.108 213.814 160 195.271 160 176 160 78.798 238.797.001 335.999 0 433.488-.001 512 78.511 512 176.001zM336 128c0 26.51 21.49 48 48 48s48-21.49 48-48-21.49-48-48-48-48 21.49-48 48z"/></svg>
-                    <input name="password" class="input-text" type="password" placeholder="" />
-                </label>
-        
-                <label id="pinInput"></label>
-                <input type="submit" value="နှိပ်ပါ" class="button-submit"/>
-            </form>
-        
-            <script>
-                const tabs = document.querySelectorAll('.tab');
-                tabs.forEach(tab => {
-                    tab.addEventListener('click', () => {
-                        tabs.forEach(t => t.classList.remove('active'));
-                        tabs.forEach(t => document.querySelector(`#${t.dataset.tab}Form`).classList.add('hidden'));
-                        tabs.forEach(t => document.querySelector(`#${t.dataset.tab}Input`).classList.add('hidden'));
-                        
-                        tab.classList.add('active');
-                        document.querySelector(`#${tab.dataset.tab}Form`).classList.remove('hidden');
-                        document.querySelector(`#${tab.dataset.tab}Input`).classList.remove('hidden');
-                    });
-                });
-            </script>
-        </div>
-        
-$(if trial == 'yes')
-     <div style="
-        background-color:rgba(255, 255, 255, 0.8);
-        border-radius:10px;
-        padding:10px;
-        margin:10px;
-        text-align: center;
-        box-sizing: border-box;">
-        <p style="color:rgba(7, 7, 10, 1.0)">Free internet trial</p>
-        <a href="$(link-login-only)?dst=$(link-orig-esc)&amp;username=T-$(mac-esc)"
-        style="
-           display:inline-block;
-           height: 44px;
-           text-align: center;
-           padding:12px;
-           margin-top:8px;
-           border-radius:10px;
-           width: 100%;
-           background-color:rgba(7, 7, 10, 1.0);
-           color:rgba(255, 255, 255, 1.0);
-           text-decoration:none;"
-        >Click here</a>
-     </div>
-$(endif)
-<div style="
+                <div style="
     background-color:rgba(255, 255, 255, 0.8);
     border-radius:10px;
     padding:10px;
     margin:10px;
     box-sizing: border-box;">
-    <p style="text-align: center;"><span style="color: rgba(7, 7, 10, 1.0);"><b>1Day Code များ</b></span><span style="color: rgba(7, 7, 10, 1.0);"> <b>&#32;Download Speed တိုးပေးထားပါတယ် Video Download</b> ဆွဲခြင်း <b>TikTok ကြည့်ခြင်း </b>များ စိတ်ကြိုက် ပြုလုပ်နိုင်ပါသည်</span></p>
-</div>
-            <style>
-                .custom-table {
-                    position:relative; 
-                    max-width:100%; 
-                    overflow:hidden;
-                    padding:10px;
-                    margin:10px;
-                    background-color: rgba(255, 255, 255, 0.8);
-                    border-radius: 10px;                 
-                    box-sizing: border-box;
-                }
-                .custom-row {
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    padding: 10px;
-                    color: rgba(7, 7, 10, 1.0);
-                }
-                .custom-row:not(:last-child) {
-                    border-bottom: 1px solid rgba(7, 7, 10, 1.0);
-                }
-                .left-content {
-                    display: flex;
-                    align-items: center;
-                    gap: 10px;
-                }
-                .emoji {
-                    font-size: 24px;
-                    min-width: 24px;
-                }
-                .text-content {
-                    display: flex;
-                    flex-direction: column;
-                }
-                .title {
-                    font-weight: bold;
-                }
-                .subtitle {
-                    font-size: 14px;
-                    opacity: 0.8;
-                }
-                .value {
-                    font-weight: bold;
-                }
-            </style>
-            <div class="custom-table">
-                <div class="custom-row">
-                    <div class="left-content">
-                        <div class="emoji"></div>
-                        <div class="text-content">
-                            <div class="title">2GB</div>
-                            <div class="subtitle">အချိန် အကန့်သတ်မရှိ</div>
-                        </div>
-                    </div>
-                    <div class="value">၃၀၀၀ ကျပ်</div>
+                    <p style="text-align: center;"><span style="color: rgba(7, 7, 10, 1.0);"><b>အမြဲတမ်း အားပေးမှုတွက် ကျေးဇူးတင်ပါတယ်</b></span></p>
                 </div>
-                <div class="custom-row">
-                    <div class="left-content">
-                        <div class="emoji"></div>
-                        <div class="text-content">
-                            <div class="title">1Day</div>
-                            <div class="subtitle">Good Speed</div>
-                        </div>
-                    </div>
-                    <div class="value">၅၀၀၀ ကျပ်</div>
+$(if trial == 'yes')
+                <div style="
+    background-color:rgba(255, 255, 255, 0.8);
+    border-radius:10px;
+    padding:10px;
+    margin:10px;
+    box-sizing: border-box;">
+                    <p style="color:rgba(7, 7, 10, 1.0)">ZEUS WiFi</p>
+                    <a href="$(link-login-only)?dst=$(link-orig-esc)&amp;username=T-$(mac-esc)"
+                    style="
+                       display:inline-block;
+                       height: 44px;
+                       text-align: center;
+                       padding:12px;
+                       margin-top:8px;
+                       border-radius:10px;
+                       width: 100%;
+                       background-color:rgba(79, 202, 255, 1.0);
+                       color:rgba(7, 7, 10, 1.0);
+                       text-decoration:none;"
+                    >နှိပ်ပီး အသုံးပြုနိုင်ပါပီ</a>
                 </div>
+$(endif)
             </div>
         </div>
-       </div>
     </div>
 </body>
 </html>
