@@ -43,12 +43,12 @@ async function SpinContent({
           className="bg-gradient-to-b from-[#2d1810] to-[#1a0a00] border-2 border-yellow-600 rounded-2xl p-8 max-w-md w-full text-center shadow-2xl glow-card"
           style={{ boxShadow: '0 0 40px rgba(255, 215, 0, 0.15)' }}
         >
-          <div className="text-5xl mb-3">🔄</div>
+          <div className="text-5xl mb-3">🛜</div>
           <h1 className="text-xl font-bold text-orange-400 mb-2">
-            သင် ကံစမ်းပြီးဖြစ်ပါသည်
+            ကံစမ်းပြီးဖြစ်ပါသည်
           </h1>
           <p className="text-white text-lg mb-4">
-            သင့်ဆု: <span className="text-yellow-400 font-bold">{existing.prizeName}</span>
+            ရရှိသောဆု: <span className="text-yellow-400 font-bold">{existing.prizeName}</span>
           </p>
           {existing.isWinning && (
             <div className="bg-black/40 rounded-xl p-4 mb-4 border border-yellow-700">
@@ -64,16 +64,16 @@ async function SpinContent({
           <p className="text-sm text-gray-400">
             {existing.isWinning
               ? 'ဆုကုဒ်ကို ကောင်တာတွင် ပြသပါ'
-              : 'ပါဝင်ကံစမ်းပေးအပ်ခြင်းအတွက် ကျေးဇူးတင်ပါသည်'}
+              : 'ပါဝင်ကံစမ်းပေးခြင်းအတွက် ကျေးဇူးတင်ပါသည်'}
           </p>
 
           {/* Instruction: Screenshot and Back to connect Wi-Fi */}
           <div className="mt-4 p-3 bg-amber-500/15 border border-amber-500/30 rounded-xl text-center">
             <p className="text-sm font-bold text-yellow-300">
-              👈 ဖုန်း၏ Back ခလုတ်ဖြင့် ပြန်ထွက်ပြီး Wi-Fi ချိတ်ပါ
+              👈 ဖုန်း၏ Back ခလုတ်ဖြင့် ပြန်ထွက်ပါ
             </p>
             <p className="text-xs text-yellow-200/70 mt-1">
-              ဆုမဲကို Screenshot ရိုက်ပြီးပါက ဖုန်း၏ Back ဖြင့် မူရင်းစာမျက်နှာသို့ ပြန်သွား၍ Ticket ကုဒ်ထည့်ပါ
+              ရရှိသောဆုမဲကို screenshot ရိုက်ထားပေးပါ
             </p>
           </div>
 
