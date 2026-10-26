@@ -24,6 +24,7 @@ export default function SpinWheel({ prizes, onSpin, loginUrl }: SpinWheelProps) 
   const [showModal, setShowModal] = useState(false);
   const [currentRotation, setCurrentRotation] = useState(0);
   const animationRef = useRef<number | null>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const numSlices = prizes.length;
   const sliceAngle = (2 * Math.PI) / numSlices;
@@ -109,13 +110,14 @@ export default function SpinWheel({ prizes, onSpin, loginUrl }: SpinWheelProps) 
       ctx.stroke();
 
       // Decorative dots around the wheel
+      const lightShift = Math.floor(rotation * 4);
       for (let i = 0; i < 24; i++) {
         const dotAngle = (i / 24) * Math.PI * 2;
         const dotX = center + (radius + 2) * Math.cos(dotAngle);
         const dotY = center + (radius + 2) * Math.sin(dotAngle);
         ctx.beginPath();
         ctx.arc(dotX, dotY, 3, 0, 2 * Math.PI);
-        ctx.fillStyle = i % 2 === 0 ? '#FFD700' : '#FF6B35';
+        ctx.fillStyle = (i + lightShift) % 2 === 0 ? '#FFD700' : '#FF6B35';
         ctx.fill();
       }
     },
@@ -192,37 +194,59 @@ export default function SpinWheel({ prizes, onSpin, loginUrl }: SpinWheelProps) 
       setResult(spinResult);
 
       if (spinResult.success) {
-        // Animate the wheel to land on the correct prize
+        // Target prize index
         const targetIndex = spinResult.prizeIndex;
 
-        // The pointer is at the top (12 o'clock = -π/2)
-        // We need the middle of the target slice to align with the pointer
-        // Slice starts at: targetIndex * sliceAngle
-        // Middle of slice: targetIndex * sliceAngle + sliceAngle / 2
-        // We need this to be at -π/2 (top), so:
-        // rotation + targetIndex * sliceAngle + sliceAngle/2 = -π/2 + 2πn
-        // rotation = -π/2 - targetIndex * sliceAngle - sliceAngle/2
+        // Pointer is at the top center of wheel (12 o'clock = -π/2)
+        // Midpoint of target slice: targetIndex * sliceAngle + sliceAngle / 2
+        // Safe natural random offset within middle 40% of target slice
+        const maxOffset = (sliceAngle * 0.5) * 0.4;
+        const randomOffset = (Math.random() - 0.5) * 2 * maxOffset;
 
-        const targetAngle =
-          -Math.PI / 2 - targetIndex * sliceAngle - sliceAngle / 2;
+        const baseTarget =
+          -Math.PI / 2 - targetIndex * sliceAngle - sliceAngle / 2 + randomOffset;
 
-        // Add multiple full rotations for visual effect (5-8 full spins)
-        const fullSpins = 5 + Math.random() * 3;
-        const totalRotation = targetAngle - fullSpins * 2 * Math.PI;
+        // Rotate clockwise (increasing angle)
+        let delta = (baseTarget - currentRotation) % (2 * Math.PI);
+        if (delta <= 0) {
+          delta += 2 * Math.PI;
+        }
+
+        // 12 to 14 full spins for sustained suspense and authentic momentum
+        const fullSpins = 12 + Math.floor(Math.random() * 3);
+        const totalRotation = currentRotation + delta + fullSpins * (2 * Math.PI);
 
         const startRotation = currentRotation;
         const startTime = performance.now();
-        const duration = 4000; // 4 seconds
+        const duration = 7500; // 7.5 seconds total spin
 
-        // Cubic bezier easing (ease-out)
-        const easeOutCubic = (t: number): number => {
-          return 1 - Math.pow(1 - t, 3);
+        // 3-Stage Physics Easing:
+        // Stage 1 (0 -> u1): Accelerate smoothly from rest to top speed
+        // Stage 2 (u1 -> u2): High-speed cruising spin
+        // Stage 3 (u2 -> 1.0): Long, gradual deceleration until gentle stop
+        const u1 = 0.15; // 0 to 1.1s
+        const u2 = 0.35; // 1.1s to 2.6s
+        const A = 0.5 * (1 - u1 + u2);
+
+        const getProgress = (t: number): number => {
+          if (t <= 0) return 0;
+          if (t >= 1) return 1;
+
+          if (t <= u1) {
+            const x = t / u1;
+            return (u1 * (x * x * x - 0.5 * x * x * x * x)) / A;
+          } else if (t <= u2) {
+            return (0.5 * u1 + (t - u1)) / A;
+          } else {
+            const y = (1 - t) / (1 - u2);
+            return 1 - ((1 - u2) * (y * y * y - 0.5 * y * y * y * y)) / A;
+          }
         };
 
         const animate = (now: number) => {
           const elapsed = now - startTime;
           const progress = Math.min(elapsed / duration, 1);
-          const eased = easeOutCubic(progress);
+          const eased = getProgress(progress);
 
           const rot =
             startRotation + (totalRotation - startRotation) * eased;
@@ -232,14 +256,18 @@ export default function SpinWheel({ prizes, onSpin, loginUrl }: SpinWheelProps) 
           if (progress < 1) {
             animationRef.current = requestAnimationFrame(animate);
           } else {
-            // Animation complete
+            // Wheel has completely stopped on the winning prize
             setCurrentRotation(totalRotation);
 
             if (spinResult.isWinning) {
               fireConfetti();
             }
-            setShowModal(true);
-            setSpinning(false);
+
+            // Brief pause (800ms) so user clearly sees where pointer landed before modal opens
+            timeoutRef.current = setTimeout(() => {
+              setShowModal(true);
+              setSpinning(false);
+            }, 800);
           }
         };
 
@@ -263,6 +291,9 @@ export default function SpinWheel({ prizes, onSpin, loginUrl }: SpinWheelProps) 
     return () => {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
+      }
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
       }
     };
   }, []);
